@@ -11,6 +11,18 @@
     <content type="html"><![CDATA[<p>Test html.</p>]]></content>
     
     
+    <categories>
+      
+      <category>test</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Test</tag>
+      
+    </tags>
     
   </entry>
   
