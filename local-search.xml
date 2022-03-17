@@ -4,23 +4,23 @@
   
   
   <entry>
-    <title>Test</title>
-    <link href="/2022/03/14/Test/test/"/>
-    <url>/2022/03/14/Test/test/</url>
+    <title>Shell脚本</title>
+    <link href="/2022/03/17/%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/Shell/"/>
+    <url>/2022/03/17/%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/Shell/</url>
     
-    <content type="html"><![CDATA[<p>Test html.</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Shell脚本"><a href="#Shell脚本" class="headerlink" title="Shell脚本"></a>Shell脚本</h1><p>Shell 脚本（shell script），是一种为 shell 编写的脚本程序。</p><p>首先建立一个简单的shell脚本<code>test.sh</code>来感受下：</p><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span>  <br>echo &quot;Hello World !&quot;<br></code></pre></td></tr></table></figure><ul><li><code>#!</code>是一个约定的标记，它告诉系统这个脚本需要什么解释器来执行，即使用哪一种 Shell。</li><li><code>echo</code>：命令用于向窗口输出文本。</li></ul><p>运行：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sh ./test.sh<br></code></pre></td></tr></table></figure><h2 id="1、变量"><a href="#1、变量" class="headerlink" title="1、变量"></a>1、变量</h2><p><strong>变量的定义</strong>：</p><ol><li>定义变量时，变量名不加美元符号；</li><li>&#x3D;&#x3D;变量名和等号之间不能有空格&#x3D;&#x3D;；</li></ol><p><strong>变量的使用</strong>：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">your_name=&quot;abc&quot;  <br>echo $your_name  <br>echo $&#123;your_name&#125;<br></code></pre></td></tr></table></figure><ul><li>加花括号是为了帮助解释器识别变量的边界，最好加上。</li></ul><p><strong>设定只读变量</strong>：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">url=&quot;https://www.google.com&quot;  <br>readonly url<br></code></pre></td></tr></table></figure><p><strong>删除变量</strong>：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">unset variable_name<br></code></pre></td></tr></table></figure><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>1、主要建立方式：</p><ul><li>单引号：<code>str=&#39;this is a string&#39;</code>。限制条件是&#x3D;&#x3D;单引号字符串中的变量是无效的&#x3D;&#x3D;；</li><li>双引号：<code>str=&quot;this is a string&quot;</code>。能够使用变量以及转义符；<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">your_name=&quot;runoob&quot;  <br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用双引号拼接</span>  <br>greeting=&quot;hello, &quot;$your_name&quot; !&quot;  <br>greeting_1=&quot;hello, $&#123;your_name&#125; !&quot;  <br>echo $greeting $greeting_1  <br><span class="hljs-meta prompt_">  </span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用单引号拼接</span>  <br>greeting_2=&#x27;hello, &#x27;$your_name&#x27; !&#x27;  <br>greeting_3=&#x27;hello, $&#123;your_name&#125; !&#x27;  <br>echo $greeting_2 $greeting_3<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">结果：</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">hello, runoob ! hello, runoob !</span> <br><span class="hljs-meta prompt_"># </span><span class="language-bash">hello, runoob ! hello, <span class="hljs-variable">$&#123;your_name&#125;</span> !</span><br></code></pre></td></tr></table></figure></li></ul><p>2、获取字符串长度：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">string=&quot;abcd&quot;  <br>echo $&#123;#string&#125; # 输出 4<br></code></pre></td></tr></table></figure><p>3、提取子字符串：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">string=&quot;runoob is a great site&quot;  <br>echo $&#123;string:1:4&#125; # 输出 unoo<br></code></pre></td></tr></table></figure><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>1、构建：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">array_name=(value0 value1 value2 value3)<br></code></pre></td></tr></table></figure><p>2、读取数组的元素：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$</span><span class="language-bash">&#123;数组名[下标]&#125;</span><br></code></pre></td></tr></table></figure><ul><li><code>$&#123;array_name[@]&#125;</code>，获取所有元素</li></ul><p>3、获取数组长度：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">取得数组元素的个数</span>  <br>length=$&#123;#array_name[@]&#125;  <br><span class="hljs-meta prompt_"># </span><span class="language-bash">或者</span>  <br>length=$&#123;#array_name[*]&#125;  <br><span class="hljs-meta prompt_"># </span><span class="language-bash">取得数组单个元素的长度</span>  <br>lengthn=$&#123;#array_name[n]&#125;<br></code></pre></td></tr></table></figure>]]></content>
     
     
     <categories>
       
-      <category>test</category>
+      <category>Linux</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>Test</tag>
+      <tag>Linux</tag>
       
     </tags>
     
@@ -29,13 +29,25 @@
   
   
   <entry>
-    <title>Hello World</title>
-    <link href="/2022/03/14/hello-world/"/>
-    <url>/2022/03/14/hello-world/</url>
+    <title>Linux常用命令</title>
+    <link href="/2022/03/17/%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <url>/2022/03/17/%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p>本篇博客主要是为了方便自己快速查找相关的Linux命令。</p><span id="more"></span><h2 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h2><ul><li><p>touch：创建文件</p></li><li><p>rm -rf file：删除非空目录</p></li><li><p>mv now_file new_file：移动&#x2F;更改文件名</p></li><li><p>cp：复制</p></li><li><p>cat -n file_name：查看文件，显示行号</p></li><li><p>head -10 file_name：显示文件前10行内容</p></li><li><p>tail 10 file_name：显示文件最后10行内容</p></li><li><p>diff file1 file2：查看两个文件的差别，以逐行的方式，比较文本文件的异同处</p></li><li><p>file file_name：显示文件类型</p></li><li><p>chmod</p><img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/20220317204218.png" style="display:block;margin:0 auto;zoom: 40%;"></li></ul><h2 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h2><ul><li>mkdir：创建文件夹</li><li>pwd：&#x3D;&#x3D;显示当前路径:&#x3D;&#x3D;</li><li><ul><li>ls -lrt：按时间排序，以列表的方式显示目录项</li></ul></li><li>ls -a：显示所有文件（包括隐藏）</li><li>tree：已树状图列出当前目录</li></ul><h2 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h2><ul><li>kill：杀死进程，最常用的信号为：<ul><li>1 (HUP)：重新加载进程</li><li>9 (KILL)：杀死一个进程</li><li>15 (TERM)：正常停止一个进程</li></ul></li><li>ps：用于显示当前进程的状态，<code>ps aux | grep 进程关键字(redis等)</code></li><li>top：实时显示进程的动态</li></ul><h2 id="压缩备份"><a href="#压缩备份" class="headerlink" title="压缩备份"></a>压缩备份</h2><ul><li>gzip：文件经它压缩过后，其名称后面会多出<code>.gz</code>的扩展名</li><li>zip：压缩后的文件后缀名为<code>.zip</code></li><li>unzip：为<code>.zip</code>压缩文件的解压缩程序</li></ul>]]></content>
     
     
+    <categories>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+    </tags>
     
   </entry>
   
