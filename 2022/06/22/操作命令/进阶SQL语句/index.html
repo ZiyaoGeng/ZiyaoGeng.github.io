@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/SQL-Coding-Class-San-Francisco-1.jpeg">
 <meta property="article:published_time" content="2022-06-22T02:40:27.457Z">
-<meta property="article:modified_time" content="2022-06-25T09:32:48.931Z">
+<meta property="article:modified_time" content="2022-06-25T09:36:08.810Z">
 <meta property="article:author" content="Qianxin">
 <meta property="article:tag" content="SQL">
 <meta name="twitter:card" content="summary_large_image">
@@ -250,7 +250,7 @@
             <h1 style="display: none">进阶SQL</h1>
             
             <div class="markdown-body">
-              <h1 id="进阶SQL"><a href="#进阶SQL" class="headerlink" title="进阶SQL"></a>进阶SQL</h1><p>记录进阶概念、技巧，熟练使用。</p>
+              <h1 id="进阶SQL"><a href="#进阶SQL" class="headerlink" title="进阶SQL"></a>进阶SQL</h1><p>记录进阶SQL的概念、技巧，熟练使用。</p>
 <h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><p>视图的本质是一个SELECT语句，一般会把频繁使用的SELECT语句（中间查询结果）保存为一个视图（临时存储），然后只需把视图当做一个表来使用，就可以方便地得到想要的结果了。并且<strong>视图中的数据会随着原表的变化自动更新</strong>。</p>
 <p>创建视图：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> view_name <span class="hljs-keyword">AS</span><br><span class="hljs-keyword">SELECT</span> column_name(s)<br><span class="hljs-keyword">FROM</span> table_name<br><span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">condition</span><br></code></pre></td></tr></table></figure>
