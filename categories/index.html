@@ -12,6 +12,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
   <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Qianxin">
   <meta name="keywords" content="">
@@ -151,7 +153,7 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('/img/bg1.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -236,6 +238,48 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+        id="heading-9778840a0100cb30c982876741b0b5a2" role="tab" data-toggle="collapse" href="#collapse-9778840a0100cb30c982876741b0b5a2"
+        aria-expanded="false"
+      >
+        SQL
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      <a href="/categories/SQL/" class="category-count col-2 col-md-1">
+        <i class="iconfont icon-articles"></i>
+        <span>2</span>
+      </a>
+      <div class="category-collapse collapse" id="collapse-9778840a0100cb30c982876741b0b5a2" role="tabpanel" aria-labelledby="heading-9778840a0100cb30c982876741b0b5a2">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/06/22/%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/%E8%BF%9B%E9%98%B6SQL%E8%AF%AD%E5%8F%A5/" class="list-group-item list-group-item-action">
+          <span class="category-post">进阶SQL</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/21/%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/%E5%9F%BA%E7%A1%80SQL%E8%AF%AD%E5%8F%A5/" class="list-group-item list-group-item-action">
+          <span class="category-post">基础SQL</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    <div class="category row">
+      <a
+        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
         id="heading-cb20b802a3f0255e054e4fb8821c5ed2" role="tab" data-toggle="collapse" href="#collapse-cb20b802a3f0255e054e4fb8821c5ed2"
         aria-expanded="false"
       >
@@ -257,41 +301,6 @@
       
         <a href="/2022/03/27/Tensorflow/Tensorflow1.x%E5%9F%BA%E7%A1%80/" class="list-group-item list-group-item-action">
           <span class="category-post">Tensorflow1.x基础</span>
-        </a>
-      
-    
-  </div>
-
-        
-      </div>
-    </div>
-  
-    
-    
-    <div class="category row">
-      <a
-        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-9778840a0100cb30c982876741b0b5a2" role="tab" data-toggle="collapse" href="#collapse-9778840a0100cb30c982876741b0b5a2"
-        aria-expanded="false"
-      >
-        SQL
-        <i class="iconfont icon-arrowright"></i>
-      </a>
-      <a href="/categories/SQL/" class="category-count col-2 col-md-1">
-        <i class="iconfont icon-articles"></i>
-        <span>1</span>
-      </a>
-      <div class="category-collapse collapse" id="collapse-9778840a0100cb30c982876741b0b5a2" role="tabpanel" aria-labelledby="heading-9778840a0100cb30c982876741b0b5a2">
-        
-        
-          
-  <div class="category-post-list">
-    
-    
-      
-      
-        <a href="/2022/03/21/%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/%E5%9F%BA%E7%A1%80SQL%E8%AF%AD%E5%8F%A5/" class="list-group-item list-group-item-action">
-          <span class="category-post">基础SQL</span>
         </a>
       
     
@@ -345,7 +354,7 @@
 
   <footer class="text-center mt-5 py-3">
   <div class="footer-content">
-     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+     <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
   </div>
   
   <div class="statistics">
