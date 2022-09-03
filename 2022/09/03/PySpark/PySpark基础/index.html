@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903142647303.png">
 <meta property="article:published_time" content="2022-09-03T05:21:14.470Z">
-<meta property="article:modified_time" content="2022-09-03T06:31:20.862Z">
+<meta property="article:modified_time" content="2022-09-03T12:54:55.703Z">
 <meta property="article:author" content="Qianxin">
 <meta property="article:tag" content="PySpark">
 <meta name="twitter:card" content="summary_large_image">
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.2k 字
+      2.9k 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10 分钟
+      24 分钟
     </span>
   
 
@@ -277,9 +277,45 @@
 <li><strong>Driver</strong>：单个Spark任务的管理者，管理Executor的任务执行和任务分解分配；</li>
 <li><strong>Executor</strong>：具体干活的进程，Spark的工作任务都是由Executor来负责执行；</li>
 </ul>
-<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903141859997.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto;zoom:50%;" /></li>
+<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903205308067.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto;zoom:60%;" /></li>
 </ol>
+<p>用户程序从<strong>最开始的提交到最终的计算执行</strong>，需要经历以下几个阶段：</p>
+<ol>
+<li>用户程序创建 SparkContext 时，新创建的 SparkContext 实例会连接到 ClusterManager。 Cluster Manager 会根据用户提交时设置的 CPU 和内存等信息为本次提交分配计算资源，启动 Executor。</li>
+<li>Driver会将用户程序划分为不同的执行阶段Stage，每个执行阶段Stage由一组完全相同Task组成，这些Task分别作用于待处理数据的不同分区。在阶段划分完成和Task创建后， Driver会向Executor发送 Task；</li>
+<li>Executor在接收到Task后，会下载Task的运行时依赖，在准备好Task的执行环境后，会开始执行Task，并且将Task的运行状态 汇报给Driver；</li>
+<li>Driver会根据收到的Task的运行状态来处理不同的状态更新。 Task分为两种：一种是Shuffle Map Task，它实现数据的重新 洗牌，洗牌的结果保存到Executor 所在节点的文件系统中；另外一种是Result Task，它负责生成结果数据；</li>
+<li>Driver 会不断地调用Task，将Task发送到Executor执行，在所有的Task 都正确执行或者超过执行次数的限制仍然没有执行成功时停止</li>
+</ol>
+<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/20220903145303.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto;zoom:70%;" />
 
+<p><strong>具体整个流程</strong>：</p>
+<ol>
+<li>Application首先被Driver构建DAG图并分解成Stage；</li>
+<li>然后Driver向Cluster Manager申请资源。</li>
+<li>Cluster Manager向某些Work Node发送征召信号。</li>
+<li>被征召的Work Node启动Executor进程响应征召，并向Driver申请任务。</li>
+<li>Driver分配Task给Work Node。</li>
+<li>Executor以Stage为单位执行Task，期间Driver进行监控。</li>
+<li>Driver收到Executor任务完成的信号后向Cluster Manager发送注销信号。</li>
+<li>Cluster Manager向Work Node发送释放资源信号。</li>
+<li>Work Node对应Executor停止运行。</li>
+</ol>
+<blockquote>
+<p>DAG：是Directed Acyclic Graph（有向无环图）的简称，反映RDD之间的依赖关系。<br>Driver Program：控制程序，负责为Application构建DAG图。<br>Cluster Manager：集群资源管理中心，负责分配计算资源。<br>Worker Node：工作节点，负责完成具体计算。<br>Executor：是运行在工作节点（Worker Node）上的一个进程，负责运行Task，并为应用程序存储数据。<br>Application：用户编写的Spark应用程序，一个Application包含多个Job。<br>Job：作业，一个Job包含多个RDD及作用于相应RDD上的各种操作。<br>Stage：阶段，是作业的基本调度单位，一个作业会分为多组任务，每组任务被称为“阶段”。<br>Task：任务，运行在Executor上的工作单元，是Executor中的一个线程。<br>总结：Application由多个Job组成，Job由多个Stage组成，Stage由多个Task组成。Stage是作业调度的基本单位。</p>
+</blockquote>
+<h2 id="PySpark-On-Spark执行原理"><a href="#PySpark-On-Spark执行原理" class="headerlink" title="PySpark On Spark执行原理"></a>PySpark On Spark执行原理</h2><img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/20220903145435.png" srcset="/img/loading.gif" lazyload style="display: block; margin: 0px auto; zoom: 50%;" />
+
+<ul>
+<li><p>Spark运行在JVM上，所以想要支持Python，就需要<strong>通过Socket网络通信，使用Py4j来将Python的SparkContext对象</strong>（Driver代码）转化为Spark的SparkContext上（JVM Driver运行）。</p>
+</li>
+<li><p>pyspark守护进程（pyspark.daemon 中转站），Driver的操作指令发送给JVM Executor，通过守护进程发送给Python进程上。Executor端本质是Python进程在工作。</p>
+</li>
+<li><p>总结：Python–&gt; JVM代码 –&gt; JVM Driver –&gt; RPC（远程调度）–&gt; 调度JVM Executor –&gt; PySpark中转 –&gt; PySpark Executor进程</p>
+</li>
+</ul>
+<p>PySpark宗旨是不在破坏Spark已有的运行时架构，在Spark架构外层包装一层Python API，借助Py4j实现Python和Java的交互，进而实现通过Python编写Spark应用程序。</p>
+<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/20220313094012.png" srcset="/img/loading.gif" lazyload style="display: block; margin: 0px auto; zoom: 50%;" />
             </div>
             <hr>
             <div>
@@ -312,6 +348,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/09/03/PySpark/Spark%20Core/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spark Core</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
