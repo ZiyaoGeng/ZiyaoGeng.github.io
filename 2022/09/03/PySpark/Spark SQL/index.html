@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Qianxin">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在Spark上运用SQL处理结构化数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark Core">
+<meta property="og:url" content="http://example.com/2022/09/03/PySpark/Spark%20SQL/index.html">
+<meta property="og:site_name" content="Qianxin">
+<meta property="og:description" content="在Spark上运用SQL处理结构化数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903142647303.png">
+<meta property="article:published_time" content="2022-09-03T13:33:11.017Z">
+<meta property="article:modified_time" content="2022-09-04T07:42:54.428Z">
+<meta property="article:author" content="Qianxin">
+<meta property="article:tag" content="PySpark">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903142647303.png">
+  
+  
+  <title>Spark Core - Qianxin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"FeSkGqHmejrTI58yB8gIMA6R-gzGzoHsz","app_key":"Rgz3ghNagjdicCRErQnr9G3Y","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Qianxin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Spark Core">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-09-03 21:33" pubdate>
+        2022年9月3日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      41 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Spark Core</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Spark-SQL"><a href="#Spark-SQL" class="headerlink" title="Spark SQL"></a>Spark SQL</h1><p>支持SQL语言、性能强、自动优化、API简单、兼容Hive，是一个用户处理<strong>大规模结构化数据</strong>的（SQL）计算引擎。</p>
+<p><strong>特点</strong>：</p>
+<ol>
+<li>融合性：SQL可以无缝集成在代码中。</li>
+<li>统一数据访问</li>
+<li><strong>Hive兼容</strong>【重要】：可以使用SparkSQL直接计算并生成Hive数据表</li>
+<li>标准化连接：支持标准化JDBC、ODBC连接，方便和各种数据库进行数据交互</li>
+</ol>
+<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903215931889.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto;zoom:70%;" />
+
+<h2 id="1-数据抽象"><a href="#1-数据抽象" class="headerlink" title="1. 数据抽象"></a>1. 数据抽象</h2><p>对比Pandas、Spark Core、Spark SQL：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>数据抽象</th>
+<th>数据类型</th>
+<th>集合类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pandas</td>
+<td>DataFrame</td>
+<td>二维表数据结构</td>
+<td>单机（本地）集合</td>
+</tr>
+<tr>
+<td>Spark Core</td>
+<td>RDD</td>
+<td>无标准数据结构</td>
+<td>分布式集合（分区）</td>
+</tr>
+<tr>
+<td>Spark SQL for JVM</td>
+<td>DataSet</td>
+<td>二维表数据结构</td>
+<td>分布式集合（分区）</td>
+</tr>
+<tr>
+<td>Spark SQL for Python</td>
+<td>DataFrame</td>
+<td>二维表数据结构</td>
+<td>分布式集合（分区）</td>
+</tr>
+</tbody></table>
+<p>RDD与DataFrame的存储区别：</p>
+<ul>
+<li>DataFrame是按照二维表格的形式存储数据；—&gt;更适合SQL进行处理</li>
+<li>RDD存储对象本身；</li>
+</ul>
+<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903221157840.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto;zoom:70%;" />
+
+<h2 id="2-Spark-SQL入口对象"><a href="#2-Spark-SQL入口对象" class="headerlink" title="2. Spark SQL入口对象"></a>2. Spark SQL入口对象</h2><p>在Spark 2.0后，推出了SparkSession对象，作为Spark编码的统一入口对象。</p>
+<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903221429116.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto;zoom:70%;" />
+
+
+
+<h2 id="3-DataFrame"><a href="#3-DataFrame" class="headerlink" title="3. DataFrame"></a>3. DataFrame</h2><p>组成：</p>
+<ul>
+<li><strong>StructType对象</strong>描述整个DataFrame的表结构；</li>
+<li><strong>StructField对象</strong>描述一个列的信息；</li>
+</ul>
+<h2 id="3-1-构建DataFrame"><a href="#3-1-构建DataFrame" class="headerlink" title="3.1 构建DataFrame"></a>3.1 构建DataFrame</h2><h3 id="3-1-1-RDD—-gt-DataFrame"><a href="#3-1-1-RDD—-gt-DataFrame" class="headerlink" title="3.1.1 RDD—&gt;DataFrame"></a>3.1.1 RDD—&gt;DataFrame</h3><p>1、RDD—&gt;DataFrame(构建DataFrame对象，传列名)：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SparkSession</span>.</span></span>create<span class="hljs-constructor">DataFrame(<span class="hljs-params">data</span>: Union[<span class="hljs-params">pyspark</span>.<span class="hljs-params">rdd</span>.RDD[Any], Iterable[Any], PandasDataFrameLike], <span class="hljs-params">schema</span>: Union[<span class="hljs-params">pyspark</span>.<span class="hljs-params">sql</span>.<span class="hljs-params">types</span>.AtomicType, <span class="hljs-params">pyspark</span>.<span class="hljs-params">sql</span>.<span class="hljs-params">types</span>.StructType, <span class="hljs-params">str</span>, None] = None, <span class="hljs-params">samplingRatio</span>: Optional[<span class="hljs-params">float</span>] = None, <span class="hljs-params">verifySchema</span>: <span class="hljs-params">bool</span> = True)</span> <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>data: <code>RDD</code> or iterable</li>
+<li>schema: <code>pyspark.sql.types.DataType</code>, str or list, optional</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">rdd = sc.textFile(<span class="hljs-string">&quot;../data/sql/people.txt&quot;</span>).<span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> x: x.split(<span class="hljs-string">&quot;,&quot;</span>)).\<br>        <span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> x: [x[<span class="hljs-number">0</span>], <span class="hljs-built_in">int</span>(x[<span class="hljs-number">1</span>])])  <span class="hljs-comment"># 类型转换</span><br><br><span class="hljs-comment"># 构建DataFrame对象</span><br>df = spark.createDataFrame(rdd, schema=[<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>])<br><span class="hljs-comment"># 打印表结构</span><br>df.printSchema()<br></code></pre></td></tr></table></figure>
+
+<p>2、RDD—&gt;DataFrame(通过StructType对象来定义DataFrame的“表结构”)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">rdd = sc.textFile(<span class="hljs-string">&quot;../data/sql/people.txt&quot;</span>).<span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> x: x.split(<span class="hljs-string">&quot;,&quot;</span>)).\<br><span class="hljs-built_in">map</span>(<span class="hljs-keyword">lambda</span> x: [x[<span class="hljs-number">0</span>], <span class="hljs-built_in">int</span>(x[<span class="hljs-number">1</span>])])<br><br><span class="hljs-comment"># 构建表结构描述：StructType对象</span><br>schema = StructType().add(<span class="hljs-string">&quot;name&quot;</span>, StringType(), nullable=<span class="hljs-literal">True</span>).add(<span class="hljs-string">&quot;age&quot;</span>, IntegerType(), nullable=<span class="hljs-literal">False</span>)<br><br>df = spark.createDataFrame(rdd, schema=schema)<br>df.show()<br></code></pre></td></tr></table></figure>
+
+<p>3、RDD—&gt;DataFrame(类型推断)：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DataFrame</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">DF(<span class="hljs-operator">*</span><span class="hljs-params">cols</span>: ColumnOrName)</span> → DataFrame<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 只传列名</span><br>df = rdd.toDF(<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;score&#x27;</span>)<br><span class="hljs-comment"># 或者传入structtype</span><br>df = rdd.toDF(schema=schema)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-1-2-外部文件读取与写入"><a href="#3-1-2-外部文件读取与写入" class="headerlink" title="3.1.2 外部文件读取与写入"></a>3.1.2 外部文件读取与写入</h3><p>通过SparkSQL的统一API进行数据读取构建DataFrame，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sparksession.read.<span class="hljs-built_in">format</span>(<span class="hljs-string">&quot;text|cvs|json|orc|jdbc|parquet|...&quot;</span>).option(<span class="hljs-string">&quot;K&quot;</span>, <span class="hljs-string">&quot;V&quot;</span>).schema(StructType|String).load() <br></code></pre></td></tr></table></figure>
+
+<p>写入：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">df<span class="hljs-selector-class">.write</span><span class="hljs-selector-class">.mode</span><span class="hljs-selector-class">.format</span>()<span class="hljs-selector-class">.option</span>(K, V)<span class="hljs-selector-class">.save</span>(PATH)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-2-DataFrame基础编程"><a href="#3-2-DataFrame基础编程" class="headerlink" title="3.2 DataFrame基础编程"></a>3.2 DataFrame基础编程</h3><p>支持两种编程风格：</p>
+<ul>
+<li>DSL风格：调用以前的API来处理数据；</li>
+<li>SQL风格；</li>
+</ul>
+<h4 id="3-2-1-DSL"><a href="#3-2-1-DSL" class="headerlink" title="3.2.1 DSL"></a>3.2.1 DSL</h4><p>1、<strong>printSchema</strong>：打印df的schema信息</p>
+<p>2、<strong>select</strong>：选择DataFrame中的指定(多)列</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs q">DataFrame.<span class="hljs-keyword">select</span>(*<span class="hljs-built_in">cols</span>: ColumnOrName) → DataFrame<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>df.select(<span class="hljs-string">&#x27;*&#x27;</span>).collect()<br>[Row(age=<span class="hljs-number">2</span>, name=<span class="hljs-string">&#x27;Alice&#x27;</span>), Row(age=<span class="hljs-number">5</span>, name=<span class="hljs-string">&#x27;Bob&#x27;</span>)]<br><span class="hljs-meta">&gt;&gt;&gt; </span>df.select(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>).collect()<br>[Row(name=<span class="hljs-string">&#x27;Alice&#x27;</span>, age=<span class="hljs-number">2</span>), Row(name=<span class="hljs-string">&#x27;Bob&#x27;</span>, age=<span class="hljs-number">5</span>)]<br><span class="hljs-meta">&gt;&gt;&gt; </span>df.select(df.name, (df.age + <span class="hljs-number">10</span>).alias(<span class="hljs-string">&#x27;age&#x27;</span>)).collect()<br>[Row(name=<span class="hljs-string">&#x27;Alice&#x27;</span>, age=<span class="hljs-number">12</span>), Row(name=<span class="hljs-string">&#x27;Bob&#x27;</span>, age=<span class="hljs-number">15</span>)]<br></code></pre></td></tr></table></figure>
+
+<p>3、<strong>filter</strong>：过滤DataFrame内的数据，返回一个过滤后的DataFrame，类似<code>dataframe.loc</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">DataFrame.<span class="hljs-built_in">filter</span>(items: <span class="hljs-type">Optional</span>[<span class="hljs-type">Sequence</span>[<span class="hljs-type">Any</span>]] = <span class="hljs-literal">None</span>, like: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = <span class="hljs-literal">None</span>, regex: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = <span class="hljs-literal">None</span>, axis: <span class="hljs-type">Union</span>[<span class="hljs-built_in">int</span>, <span class="hljs-built_in">str</span>, <span class="hljs-literal">None</span>] = <span class="hljs-literal">None</span>) → pyspark.pandas.frame.DataFrame<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>like：Keep labels from axis for which “like in label &#x3D;&#x3D; True”.</li>
+<li>regex：Keep labels from axis for which re.search(regex, label) &#x3D;&#x3D; True.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df.<span class="hljs-built_in">filter</span>(<span class="hljs-string">&quot;score &lt; 99&quot;</span>).show()<br></code></pre></td></tr></table></figure>
+
+<p>4、<strong>gourpBy</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">DataFrame.groupby(by: <span class="hljs-type">Union</span>[<span class="hljs-type">Any</span>, <span class="hljs-type">Tuple</span>[<span class="hljs-type">Any</span>, …], Series, <span class="hljs-type">List</span>[<span class="hljs-type">Union</span>[<span class="hljs-type">Any</span>, <span class="hljs-type">Tuple</span>[<span class="hljs-type">Any</span>, …], Series]]], axis: <span class="hljs-type">Union</span>[<span class="hljs-built_in">int</span>, <span class="hljs-built_in">str</span>] = <span class="hljs-number">0</span>, as_index: <span class="hljs-built_in">bool</span> = <span class="hljs-literal">True</span>, dropna: <span class="hljs-built_in">bool</span> = <span class="hljs-literal">True</span>) → DataFrameGroupBy<br></code></pre></td></tr></table></figure>
+
+<p>5、<strong>dropDuplicates</strong>：清洗数据，行去重，可以指定哪个列去重</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DataFrame</span>.</span></span>drop<span class="hljs-constructor">Duplicates(<span class="hljs-params">subset</span>: Optional[List[<span class="hljs-params">str</span>]] = None)</span> → pyspark.sql.dataframe.DataFrame<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">df.dropDuplicates([<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;height&#x27;</span>]).show()<br>+-----+---+------+<br>| name|age|height|<br>+-----+---+------+<br>|Alice|  <span class="hljs-number">5</span>|    <span class="hljs-number">80</span>|<br>+-----+---+------+<br></code></pre></td></tr></table></figure>
+
+<p>6、<strong>dropna</strong>：删除有缺失</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">DataFrame.dropna(how: <span class="hljs-built_in">str</span> = <span class="hljs-string">&#x27;any&#x27;</span>, thresh: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>] = <span class="hljs-literal">None</span>, subset: <span class="hljs-type">Union</span>[<span class="hljs-built_in">str</span>, <span class="hljs-type">Tuple</span>[<span class="hljs-built_in">str</span>, …], <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>], <span class="hljs-literal">None</span>] = <span class="hljs-literal">None</span>) → pyspark.sql.dataframe.DataFrame<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-2-2-SQL风格"><a href="#3-2-2-SQL风格" class="headerlink" title="3.2.2 SQL风格"></a>3.2.2 SQL风格</h4><p>1、注册DataFrame为表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">df.createTempView() <span class="hljs-comment"># 临时表</span><br>df.creaOrReplaceTempView() <span class="hljs-comment"># 临时表，如果存在进行替换</span><br>df.createGlobalTempView() <span class="hljs-comment"># 注册一个全局表</span><br></code></pre></td></tr></table></figure>
+
+<p>2、SQL查询</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">SparkSession.<span class="hljs-keyword">sql</span>(sqlQuery: str, **kwargs: <span class="hljs-keyword">Any</span>) → pyspark.<span class="hljs-keyword">sql</span>.dataframe.DataFrame<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">spark.sql(<span class="hljs-string">&quot;SELECT * FROM range(10) where id &gt; 7&quot;</span>).show()<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-2-3-pyspark-sql-functions包"><a href="#3-2-3-pyspark-sql-functions包" class="headerlink" title="3.2.3 pyspark.sql.functions包"></a>3.2.3 pyspark.sql.functions包</h4><p>这个包提供了一系列的计算函数</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">from</span> pyspark.<span class="hljs-keyword">sql</span>.<span class="hljs-keyword">functions</span> <span class="hljs-keyword">as</span> F<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-3-UDF自定义函数"><a href="#3-3-UDF自定义函数" class="headerlink" title="3.3 UDF自定义函数"></a>3.3 UDF自定义函数</h2><p>SparkSQL与Hive一样，支持自定义函数：UDF和UDAF。</p>
+<ul>
+<li>UDF（User-Defined-Function）函数：一对一</li>
+<li>UDAF（User-Defined-Aggregation-Function）聚合函数：多对一</li>
+</ul>
+<p>【注】目前Python只支持UDF</p>
+<p><strong>定义方式</strong>：<strong>spark.sql.functions.udf</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pyspark.sql.functions.udf(f: <span class="hljs-type">Union</span>[<span class="hljs-type">Callable</span>[[…], <span class="hljs-type">Any</span>], DataTypeOrString, <span class="hljs-literal">None</span>] = <span class="hljs-literal">None</span>, returnType: DataTypeOrString = StringType()) → <span class="hljs-type">Union</span>[UserDefinedFunctionLike, <span class="hljs-type">Callable</span>[[<span class="hljs-type">Callable</span>[[…], <span class="hljs-type">Any</span>]], UserDefinedFunctionLike]]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>f：被注册成udf的方法名；</li>
+<li>returnType：声明UDF的返回值类型；</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">num_ride_10</span>(<span class="hljs-params">num</span>):<br>  <span class="hljs-keyword">return</span> num * <span class="hljs-number">10</span><br>udf3 = udf(num_ride_10, IntergerType())<br>df.select(udf3(df[<span class="hljs-string">&#x27;num&#x27;</span>])).show()<br></code></pre></td></tr></table></figure>
+
+<p>【注】返回值类型包括：</p>
+<ul>
+<li><p>int：IntergerType()；</p>
+</li>
+<li><p>float：FloatType、DoubleType；</p>
+</li>
+<li><p>list：ArrayType(StringType())；</p>
+</li>
+<li><p>dict：StructType</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">struct_type = StructType().add(<span class="hljs-string">&quot;num&quot;</span>: IntergerType()).add(<span class="hljs-string">&quot;letter_str&quot;</span>, StringType())<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="3-4-DataFrame自动优化"><a href="#3-4-DataFrame自动优化" class="headerlink" title="3.4 DataFrame自动优化"></a>3.4 DataFrame自动优化</h2><p>SparkSQL会对写完的代码，执行“自动优化”， 以提升代码运行效率，避免开发者水平影响到代码执行效率。</p>
+<ul>
+<li>依赖Catalyst优化器</li>
+</ul>
+<p>Catalyst优化器大方面的优化点有两个：</p>
+<ol>
+<li>谓词下推（Predicate Pushdown）\断言下推：将判断逻辑提到前面，减少shuffle的数据量；</li>
+<li>列值裁剪（Column Pruning）：将加载的列进行裁剪，尽量减少被处理数据的宽度；</li>
+</ol>
+<p>【注】DataFrame优化后，最终还是转换成RDD去执行；</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/PySpark/">PySpark</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PySpark/">PySpark</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/03/PySpark/Spark%20Core/">
+                        <span class="hidden-mobile">Spark Core</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <div> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
