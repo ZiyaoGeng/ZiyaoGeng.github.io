@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903142647303.png">
 <meta property="article:published_time" content="2022-09-03T13:33:11.017Z">
-<meta property="article:modified_time" content="2022-09-04T08:00:09.793Z">
+<meta property="article:modified_time" content="2022-09-04T08:30:48.393Z">
 <meta property="article:author" content="Qianxin">
 <meta property="article:tag" content="PySpark">
 <meta name="twitter:card" content="summary_large_image">
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.8k 字
+      4.7k 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      41 分钟
+      40 分钟
     </span>
   
 
@@ -360,7 +360,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df.<span class="hljs-built_in">filter</span>(<span class="hljs-string">&quot;score &lt; 99&quot;</span>).show()<br></code></pre></td></tr></table></figure>
 
 <p>4、<strong>gourpBy</strong>：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">DataFrame.groupby(by: <span class="hljs-type">Union</span>[<span class="hljs-type">Any</span>, <span class="hljs-type">Tuple</span>[<span class="hljs-type">Any</span>, …], Series, <span class="hljs-type">List</span>[<span class="hljs-type">Union</span>[<span class="hljs-type">Any</span>, <span class="hljs-type">Tuple</span>[<span class="hljs-type">Any</span>, …], Series]]], axis: <span class="hljs-type">Union</span>[<span class="hljs-built_in">int</span>, <span class="hljs-built_in">str</span>] = <span class="hljs-number">0</span>, as_index: <span class="hljs-built_in">bool</span> = <span class="hljs-literal">True</span>, dropna: <span class="hljs-built_in">bool</span> = <span class="hljs-literal">True</span>) → DataFrameGroupBy<br></code></pre></td></tr></table></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DataFrame</span>.</span></span>group<span class="hljs-constructor">By(<span class="hljs-operator">*</span><span class="hljs-params">cols</span>: ColumnOrName)</span> → GroupedData<br></code></pre></td></tr></table></figure>
 
 <p>5、<strong>dropDuplicates</strong>：清洗数据，行去重，可以指定哪个列去重</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DataFrame</span>.</span></span>drop<span class="hljs-constructor">Duplicates(<span class="hljs-params">subset</span>: Optional[List[<span class="hljs-params">str</span>]] = None)</span> → pyspark.sql.dataframe.DataFrame<br></code></pre></td></tr></table></figure>
