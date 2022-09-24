@@ -18,23 +18,23 @@
   <meta name="author" content="Qianxin">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Spark是算法工程师离不开的技能，加油学～">
+    <meta name="description" content="Hadoop Shell命令常用来对HDFS操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark基础">
-<meta property="og:url" content="http://example.com/2022/09/03/PySpark/PySpark%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="Hadoop Shell命令">
+<meta property="og:url" content="http://example.com/2022/09/24/Hadoop%20Shell%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Qianxin">
-<meta property="og:description" content="Spark是算法工程师离不开的技能，加油学～">
+<meta property="og:description" content="Hadoop Shell命令常用来对HDFS操作。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903142647303.png">
-<meta property="article:published_time" content="2022-09-03T05:21:14.470Z">
-<meta property="article:modified_time" content="2022-09-24T13:10:41.626Z">
+<meta property="og:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220924212528753.png">
+<meta property="article:published_time" content="2022-09-24T13:04:59.576Z">
+<meta property="article:modified_time" content="2022-09-24T13:25:41.658Z">
 <meta property="article:author" content="Qianxin">
-<meta property="article:tag" content="PySpark">
+<meta property="article:tag" content="Hadoop">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903142647303.png">
+<meta name="twitter:image" content="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220924212528753.png">
   
   
-  <title>Spark基础 - Qianxin</title>
+  <title>Hadoop Shell命令 - Qianxin</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -180,7 +180,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Spark基础">
+            <span class="h2" id="subtitle" title="Hadoop Shell命令">
               
             </span>
 
@@ -190,8 +190,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-09-03 13:21" pubdate>
-        2022年9月3日 下午
+      <time datetime="2022-09-24 21:04" pubdate>
+        2022年9月24日 晚上
       </time>
     </span>
   
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.9k 字
+      1.1k 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      25 分钟
+      9 分钟
     </span>
   
 
@@ -247,75 +247,105 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Spark基础</h1>
+            <h1 style="display: none">Hadoop Shell命令</h1>
             
             <div class="markdown-body">
-              <h1 id="PySpark基础"><a href="#PySpark基础" class="headerlink" title="PySpark基础"></a>PySpark基础</h1><p>Apache Spark是一个开源的分布式集群计算框架，用于快速处理、查询和分析大数据（离线批处理和实时流式计算）。Spark<strong>执行内存计算</strong>和<strong>使用有向无环图执行引擎支持无环数据流</strong>，比Hadoop等Map Reduce框架快100倍。</p>
-<p>Spark 2.0 版本之前, Spark 的<strong>核心编程接口</strong>是<strong>弹性分布式数据集(RDD)</strong> 。Spark2.0版本之后, RDD 被 <strong>Dataset</strong> （JVM）所取代, Dataset 跟 RDD 一样也是强类型的, 但是底层做了更多的优化。</p>
-<ul>
-<li>RDD是一种分布式内存抽象，能够在大规模集群中做内存运算，是整个Spark的核心数据结构；</li>
-</ul>
-<p><strong>PySpark</strong>是Apache Spark的<strong>Python接口</strong>。它不仅允许使用Python api编写Spark应用程序，还提供了PySpark shell，用于在分布式环境中交互分析数据。PySpark支持Spark的大部分特性，如<strong>Spark Core</strong>、<strong>Spark SQL</strong>，<strong>DataFrame</strong>，Streaming，MLlib和GraphX（用的旧图）。</p>
-<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20211030084824690.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto; zoom: 50%;" >
+              <h1 id="Hadoop-Shell常用命令"><a href="#Hadoop-Shell常用命令" class="headerlink" title="Hadoop Shell常用命令"></a>Hadoop Shell常用命令</h1><p>XXX Hadoop HDFS仓库前缀：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">/user/hadoop-xxrec/<br></code></pre></td></tr></table></figure>
+
+<p>命令列表：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ls</td>
+<td>显示文件信息</td>
+</tr>
+<tr>
+<td>mkdir</td>
+<td>创建文件夹</td>
+</tr>
+<tr>
+<td>cp</td>
+<td>复制文件</td>
+</tr>
+<tr>
+<td>mv</td>
+<td>移动文件</td>
+</tr>
+<tr>
+<td>put</td>
+<td>上传文件到HDFS</td>
+</tr>
+<tr>
+<td>get</td>
+<td>从HDFS上下载文件</td>
+</tr>
+<tr>
+<td>cat</td>
+<td>打印文件数据</td>
+</tr>
+<tr>
+<td>rm</td>
+<td>删除</td>
+</tr>
+<tr>
+<td>text</td>
+<td>打印文件内容</td>
+</tr>
+<tr>
+<td>getmerge</td>
+<td>合并HDFS文件到本地</td>
+</tr>
+<tr>
+<td>du</td>
+<td>查看文件（目录中所有文件）大小</td>
+</tr>
+</tbody></table>
+<p>API文档：<a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html">https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html</a></p>
+<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -ls &lt;args<br></code></pre></td></tr></table></figure>
+
+<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -mkdir &lt;paths&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="cp与mv"><a href="#cp与mv" class="headerlink" title="cp与mv"></a>cp与mv</h3><p>cp：将文件从源路径复制到目标路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -cp URI [URI ...] &lt;dest&gt;<br></code></pre></td></tr></table></figure>
+
+<p>mv：将文件从源路径移动到目标路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -mv URI [URI ...] &lt;dest&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="put与get"><a href="#put与get" class="headerlink" title="put与get"></a>put与get</h3><p>put：从本地文件系统中复制单个或多个源路径到目标文件系统。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -put &lt;localsrc&gt; ... &lt;dst&gt;<br></code></pre></td></tr></table></figure>
+
+<p>get：复制文件到本地文件系统</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -get [-ignorecrc] -[crc] &lt;src&gt; &lt;localdst&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>将路径指定文件的内容输出到stdout，打印</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -cat URI [URI ...]<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><strong>Spark Core</strong>：Spark Core 是 Spark 平台的底层通用执行引擎，所有其他功能都建立在其之上。它<strong>提供了RDD和内存计算能力</strong>。</li>
-<li><strong>Spark SQL and DataFrame</strong>：Spark SQL 是用于结构化数据处理的 Spark 模块。它提供了一个称为 <strong>DataFrame</strong> 的编程抽象，也可以作为分布式 SQL 查询引擎。Spark SQL针对的是离线计算场景，Spark提供了Structred Streaming模块【替代Spark Streaming】以Spark SQL为基础，进行数据流式计算。</li>
-<li><strong>Streaming</strong>：Apache Spark 中的流式处理功能在 Spark 之上运行，支持跨流式处理和历史数据的强大交互式和分析应用程序，同时继承了 Spark 的易用性和容错特性。</li>
-<li><strong>MLlib</strong>：MLlib 建立在 Spark 之上，是一个可扩展的机器学习库，它提供了一组统一的高级 API，可帮助用户创建和调整实用的机器学习pipeline。</li>
+<li>随机返回指定行数的样本数据：<code>hadoop fs -cat /path/txt | shuf -n 5</code></li>
+<li>返回前几行的样本数据：<code>hadoop fs -cat /path/txt | head -n 5</code></li>
+<li>返回最后几行的样本数据：<code>hadoop fs -cat /path/txt | taik -n 5</code></li>
+<li>查看文本行数：<code>hadoop fs -cat /path/txt | wc -1</code></li>
 </ul>
-<h2 id="运行模式"><a href="#运行模式" class="headerlink" title="运行模式"></a>运行模式</h2><ol>
-<li><p>本地模式（单机）：以一个独立的进程，通过其内部的多个线程来模拟整个Spark运行环境。</p>
-</li>
-<li><p>Standalone模式（集群）：Spark中的各个角色以独立进程的形式存在，并组成Spark集群环境。</p>
-</li>
-<li><p><strong>Hadoop YARN模式（集群）</strong>：Spark中的各个角色运行在YARN的容器内部，并组成Spark集群环境。</p>
-<p>运行在集群上，主要有四个部分组成：</p>
-<ul>
-<li><strong>Master(ResourceManager)</strong> ：集群的资源管理与分配；</li>
-<li><strong>Worker(NodeManager)</strong> ：负责管理单个服务器的资源；</li>
-<li><strong>Driver</strong>：单个Spark任务的管理者，管理Executor的任务执行和任务分解分配；</li>
-<li><strong>Executor</strong>：具体干活的进程，Spark的工作任务都是由Executor来负责执行；</li>
-</ul>
-<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/image-20220903205308067.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto;zoom:60%;" /></li>
-</ol>
-<p>用户程序从<strong>最开始的提交到最终的计算执行</strong>，需要经历以下几个阶段：</p>
-<ol>
-<li>用户程序创建 SparkContext 时，新创建的 SparkContext 实例会连接到 ClusterManager。 Cluster Manager 会根据用户提交时设置的 CPU 和内存等信息为本次提交分配计算资源，启动 Executor。</li>
-<li>Driver会将用户程序划分为不同的执行阶段Stage，每个执行阶段Stage由一组完全相同Task组成，这些Task分别作用于待处理数据的不同分区。在阶段划分完成和Task创建后， Driver会向Executor发送 Task；</li>
-<li>Executor在接收到Task后，会下载Task的运行时依赖，在准备好Task的执行环境后，会开始执行Task，并且将Task的运行状态 汇报给Driver；</li>
-<li>Driver会根据收到的Task的运行状态来处理不同的状态更新。 Task分为两种：一种是Shuffle Map Task，它实现数据的重新 洗牌，洗牌的结果保存到Executor 所在节点的文件系统中；另外一种是Result Task，它负责生成结果数据；</li>
-<li>Driver 会不断地调用Task，将Task发送到Executor执行，在所有的Task 都正确执行或者超过执行次数的限制仍然没有执行成功时停止</li>
-</ol>
-<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/20220903145303.png" srcset="/img/loading.gif" lazyload style="display:block;margin:0 auto;zoom:70%;" />
+<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h3><p>删除指定的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -rm URI<br></code></pre></td></tr></table></figure>
 
-<p><strong>具体整个流程</strong>：</p>
-<ol>
-<li>Application首先被Driver构建DAG图并分解成Stage；</li>
-<li>然后Driver向Cluster Manager申请资源。</li>
-<li>Cluster Manager向某些Work Node发送征召信号。</li>
-<li>被征召的Work Node启动Executor进程响应征召，并向Driver申请任务。</li>
-<li>Driver分配Task给Work Node。</li>
-<li>Executor以Stage为单位执行Task，期间Driver进行监控。</li>
-<li>Driver收到Executor任务完成的信号后向Cluster Manager发送注销信号。</li>
-<li>Cluster Manager向Work Node发送释放资源信号。</li>
-<li>Work Node对应Executor停止运行。</li>
-</ol>
-<blockquote>
-<p>DAG：是Directed Acyclic Graph（有向无环图）的简称，反映RDD之间的依赖关系。<br>Driver Program：控制程序，负责为Application构建DAG图。<br>Cluster Manager：集群资源管理中心，负责分配计算资源。<br>Worker Node：工作节点，负责完成具体计算。<br>Executor：是运行在工作节点（Worker Node）上的一个进程，负责运行Task，并为应用程序存储数据。<br>Application：用户编写的Spark应用程序，一个Application包含多个Job。<br>Job：作业，一个Job包含多个RDD及作用于相应RDD上的各种操作。<br>Stage：阶段，是作业的基本调度单位，一个作业会分为多组任务，每组任务被称为“阶段”。<br>Task：任务，运行在Executor上的工作单元，是Executor中的一个线程。<br>总结：Application由多个Job组成，Job由多个Stage组成，Stage由多个Task组成。Stage是作业调度的基本单位。</p>
-</blockquote>
-<h2 id="PySpark-On-Spark执行原理"><a href="#PySpark-On-Spark执行原理" class="headerlink" title="PySpark On Spark执行原理"></a>PySpark On Spark执行原理</h2><img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/20220903145435.png" srcset="/img/loading.gif" lazyload style="display: block; margin: 0px auto; zoom: 50%;" />
+<h3 id="text"><a href="#text" class="headerlink" title="text"></a>text</h3><p>将源文件输出为文本格式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -text &lt;src&gt;<br></code></pre></td></tr></table></figure>
 
-<ul>
-<li><p>Spark运行在JVM上，所以想要支持Python，就需要<strong>通过Socket网络通信，使用Py4j来将Python的SparkContext对象</strong>（Driver代码）转化为Spark的SparkContext上（JVM Driver运行）。</p>
-</li>
-<li><p>pyspark守护进程（pyspark.daemon 中转站），Driver的操作指令发送给JVM Executor，通过守护进程发送给Python进程上。Executor端本质是Python进程在工作。</p>
-</li>
-<li><p>总结：Python–&gt; JVM代码 –&gt; JVM Driver –&gt; RPC（远程调度）–&gt; 调度JVM Executor –&gt; PySpark中转 –&gt; PySpark Executor进程</p>
-</li>
-</ul>
-<p>PySpark宗旨是不在破坏Spark已有的运行时架构，在Spark架构外层包装一层Python API，借助Py4j实现Python和Java的交互，进而实现通过Python编写Spark应用程序。</p>
-<img src="https://gzy-gallery.oss-cn-shanghai.aliyuncs.com/img/20220313094012.png" srcset="/img/loading.gif" lazyload style="display: block; margin: 0px auto; zoom: 50%;" />
+<p>例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -text /user/hadoop-xxrec/vector_model/..../worker0 | head<br></code></pre></td></tr></table></figure>
+
+<h3 id="getmerge"><a href="#getmerge" class="headerlink" title="getmerge"></a>getmerge</h3><p>接受一个源目录和一个目标文件作为输入，并且将源目录中所有文件连接成本地目标文件。addnl是可选的，用于指定在每个文件结尾添加一个换行符。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -getmerge &lt;src&gt; &lt;localdst&gt; [addnl]<br></code></pre></td></tr></table></figure>
+
+<h3 id="du"><a href="#du" class="headerlink" title="du"></a>du</h3><p>显示目录中所有文件的大小，或者当只指定一个文件时，显示此文件的大小。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -du URI<br></code></pre></td></tr></table></figure>
             </div>
             <hr>
             <div>
@@ -324,7 +354,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/PySpark/">PySpark</a>
+                      <a class="hover-with-bg" href="/categories/Hadoop/">Hadoop</a>
                     
                   </div>
                 
@@ -332,7 +362,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/PySpark/">PySpark</a>
+                      <a class="hover-with-bg" href="/tags/Hadoop/">Hadoop</a>
                     
                   </div>
                 
@@ -349,18 +379,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/03/PySpark/Spark%20Core/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Spark Core</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/22/SQL/%E8%BF%9B%E9%98%B6SQL%E8%AF%AD%E5%8F%A5/">
-                        <span class="hidden-mobile">进阶SQL</span>
+                      <a href="/2022/09/03/PySpark/Spark%20SQL/">
+                        <span class="hidden-mobile">Spark SQL</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
